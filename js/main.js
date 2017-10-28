@@ -1,164 +1,101 @@
-document.getElementById('app').innerHTML = renderHTML();
+"use strict";
 
-function renderHTML() {
-  const API = twitchApiSample();
-  let html  = "<h1 id='title' class='span12'>Twitch Streamer Status</h1>";
+let channels = [
+  "ESL_SC2",
+  "OgamingSC2",
+  "cretetion",
+  "freecodecamp",
+  "storbeck",
+  "habathcx",
+  "RobotCaleb",
+  "noobs2ninjas",
+  "invalidchannel1982",
+  "invalid-channel",
+  "riotgames",
+  "syndicate",
+  "summit1g",
+  "esl_csgo",
+  "esltv_cs"
+];
+let app = document.getElementById("app");
 
-  html += "<div class='container'>";
+for (let i = 0; i < channels.length; i++) {
+  generateHTML(channels[i]);
+}
 
-  for (let i = 0; i < API.length; i++) {
-    if (API[i].hasOwnProperty("stream")) {  // If channel exists
-      if (API[i].stream !== null) {         // If online
-        let name        = API[i].stream.display_name;
-        let game        = API[i].stream.game;
-        let status      = API[i].stream.status;
-        let link        = API[i].stream.url;
+//------FUNCTIONALITY------//
+function generateHTML(channel) {
+  let url = `https://wind-bow.glitch.me/twitch-api/channels/${channel}`;
+  let request = new XMLHttpRequest();
 
-        html += `
-          <a class="card span6" href="${link}">
-            <div>
-              <p>${name} is playing ${game} <span class="online">(online)</span></p>
-              <p>Description: <br>${status}</p>
-            </div>
-          </a>
-        `;
+  request.open("GET", url, true);
+  request.send();
+
+  request.onload = function () {
+    if (request.status >= 200 && request.status < 400) {
+      let data = JSON.parse(request.responseText);
+
+      if (data.hasOwnProperty("error")) invalidChannelHTML(data);
+      else {
+        url = `https://wind-bow.glitch.me/twitch-api/streams/${channel}`;
+        request = new XMLHttpRequest();
+
+        request.open("GET", url, true);
+        request.send();
+
+        request.onload = function () {
+          if (request.status >= 200 && request.status < 400) {
+            data = JSON.parse(request.responseText);
+
+            if (data.stream === null) offlineChannelHTML(channel);
+            else onlineChannelHTML(data);
+          }
+        }
+
+        request.onerror = function () { };
       }
-      else {    // If offline
-        let name = API[i].display_name;
-        let link = API[i]._links.self;
-
-        html += `
-          <a class="card span6" href="${link}">
-            <div>
-              <p>${name} <span class="offline">(offline)</span></p>
-            </div>
-          </a>
-        `;
-      }
-    }
-    else {      // If channel doesn't exist
-      let status  = API[i].status;
-      let error   = API[i].error;
-      let message = API[i].message;
-
-      html += `
-        <a class="card span6">
-          <div>
-            <p>${status}: ${error}</p><p>${message}</p>
-          </div>
-        </a>
-      `;
     }
   }
 
-  html += "</div>";
-
-  return html;
+  request.onerror = function () { };
 }
 
-// API SAMPLE //
-function twitchApiSample() {
-  return [
-    {
-      "stream": {
-        "mature": false,
-        "status": "Greg working on Electron-Vue boilerplate w/ Akira #programming #vuejs #electron",
-        "broadcaster_language": "en",
-        "display_name": "FreeCodeCamp",
-        "game": "Creative",
-        "language": "en",
-        "_id": 79776140,
-        "name": "freecodecamp",
-        "created_at": "2015-01-14T03:36:47Z",
-        "updated_at": "2016-09-17T05:00:52Z",
-        "delay": null,
-        "logo": "https://static-cdn.jtvnw.net/jtv_user_pictures/freecodecamp-profile_image-d9514f2df0962329-300x300.png",
-        "banner": null,
-        "video_banner": "https://static-cdn.jtvnw.net/jtv_user_pictures/freecodecamp-channel_offline_image-b8e133c78cd51cb0-1920x1080.png",
-        "background": null,
-        "profile_banner": "https://static-cdn.jtvnw.net/jtv_user_pictures/freecodecamp-profile_banner-6f5e3445ff474aec-480.png",
-        "profile_banner_background_color": null,
-        "partner": false,
-        "url": "https://www.twitch.tv/freecodecamp",
-        "views": 161989,
-        "followers": 10048,
-        "_links": {
-          "self": "https://api.twitch.tv/kraken/channels/freecodecamp",
-          "follows": "https://api.twitch.tv/kraken/channels/freecodecamp/follows",
-          "commercial": "https://api.twitch.tv/kraken/channels/freecodecamp/commercial",
-          "stream_key": "https://api.twitch.tv/kraken/channels/freecodecamp/stream_key",
-          "chat": "https://api.twitch.tv/kraken/chat/freecodecamp",
-          "subscriptions": "https://api.twitch.tv/kraken/channels/freecodecamp/subscriptions",
-          "editors": "https://api.twitch.tv/kraken/channels/freecodecamp/editors",
-          "teams": "https://api.twitch.tv/kraken/channels/freecodecamp/teams",
-          "videos": "https://api.twitch.tv/kraken/channels/freecodecamp/videos"
-        }
-      },
-      "_links": {
-        "self": "https://api.twitch.tv/kraken/streams/freecodecamp",
-        "channel": "https://api.twitch.tv/kraken/channels/freecodecamp"
-      }
-    },
-    {
-      "stream": null,
-      "display_name": "OgamingSC2",
-      "_links": {
-        "self": "https://api.twitch.tv/kraken/streams/ogamingsc2",
-        "channel": "https://api.twitch.tv/kraken/channels/ogamingsc2"
-      }
-    },
-    {
-      "stream": {
-        "mature": false,
-        "status": "RERUN: StarCraft 2 - Kane vs. HuK (ZvP) - WCS Season 3 Challenger AM - Match 4",
-        "broadcaster_language": "en",
-        "display_name": "ESL_SC2",
-        "game": "StarCraft II",
-        "language": "en",
-        "_id": 30220059,
-        "name": "esl_sc2",
-        "created_at": "2012-05-02T09:59:20Z",
-        "updated_at": "2016-09-17T06:02:57Z",
-        "delay": null,
-        "logo": "https://static-cdn.jtvnw.net/jtv_user_pictures/esl_sc2-profile_image-d6db9488cec97125-300x300.jpeg",
-        "banner": null,
-        "video_banner": "https://static-cdn.jtvnw.net/jtv_user_pictures/esl_sc2-channel_offline_image-5a8657f8393c9d85-1920x1080.jpeg",
-        "background": null,
-        "profile_banner": "https://static-cdn.jtvnw.net/jtv_user_pictures/esl_sc2-profile_banner-f8295b33d1846e75-480.jpeg",
-        "profile_banner_background_color": "#050506",
-        "partner": true,
-        "url": "https://www.twitch.tv/esl_sc2",
-        "views": 60843789,
-        "followers": 135275,
-        "_links": {
-          "self": "https://api.twitch.tv/kraken/channels/esl_sc2",
-          "follows": "https://api.twitch.tv/kraken/channels/esl_sc2/follows",
-          "commercial": "https://api.twitch.tv/kraken/channels/esl_sc2/commercial",
-          "stream_key": "https://api.twitch.tv/kraken/channels/esl_sc2/stream_key",
-          "chat": "https://api.twitch.tv/kraken/chat/esl_sc2",
-          "subscriptions": "https://api.twitch.tv/kraken/channels/esl_sc2/subscriptions",
-          "editors": "https://api.twitch.tv/kraken/channels/esl_sc2/editors",
-          "teams": "https://api.twitch.tv/kraken/channels/esl_sc2/teams",
-          "videos": "https://api.twitch.tv/kraken/channels/esl_sc2/videos"
-        }
-      },
-      "_links": {
-        "self": "https://api.twitch.tv/kraken/streams/esl_sc2",
-        "channel": "https://api.twitch.tv/kraken/channels/esl_sc2"
-      }
-    },
-    {
-      "stream": null,
-      "display_name": "noobs2ninjas",
-      "_links": {
-        "self": "https://api.twitch.tv/kraken/streams/esl_sc2",
-        "channel": "https://api.twitch.tv/kraken/channels/esl_sc2"
-      }
-    },
-    {
-      "error": "Not Found",
-      "status": 404,
-      "message": "Channel 'not-a-valid-account' does not exist"
-    }
-  ]
+function invalidChannelHTML(data) {
+  let status = data.status;
+  let error = data.error;
+  let message = data.message;
+
+  app.innerHTML += `
+    <a class="card span6">
+    <div>  
+    <p>${status}: ${error}</p><p>${message}</p>
+    </div>
+    </a>
+  `;
+}
+
+function offlineChannelHTML(channel) {
+  app.innerHTML += `
+    <a class="card span6" href="https://www.twitch.tv/${channel}" target="_blank">
+    <div>  
+    <p>${channel} <span class="offline">(offline)</span></p>
+    </div>
+    </a>
+  `;
+}
+
+function onlineChannelHTML(data) {
+  let name = data.stream.channel.display_name;
+  let game = data.stream.game;
+  let status = data.stream.channel.status;
+  let link = data.stream.channel.url;
+
+  app.innerHTML += `
+    <a class="card span6" href="${link}" target="_blank">
+      <div>
+        <p>${name} is playing ${game} <span class="online">(online)</span></p>
+        <p>Description: <br>${status}</p>
+      </div>
+    </a>
+  `;
 }
