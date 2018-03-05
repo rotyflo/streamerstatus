@@ -1,38 +1,22 @@
-body, html {
-  text-align:   center;
-  margin:       0;
-  padding:      0;
-  font-family:  Arial, Helvetica, sans-serif;
-  background-color: #E1BEE7;
+body {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-#title {
-  background-color: #9C27B0;
-  color:            white;
-  padding:            4px 0;
-  margin:             0;
+body, #app, #title {
+  padding: 0;
+  margin: 0;
 }
 
-#app {
-  column-width: 300px;
-  column-gap: 0;
+.input-group {
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .card {
-  display: block;
-  text-align:       left;
-  color:          #212121;
-  text-decoration:  none;
-  background-color: #fff;
-  border:          1px solid #BDBDBD;
-  padding: 16px;
+  color: #212121;
+  text-decoration: none;
 }
-
-/* PREVENT '.card' CONTENT BREAKING ACROSS COLUMNS */
-.card > div {
-  display: inline-block;
+.card:hover {
+  text-decoration: none;
 }
-
-/*  STREAMER STATUS */
-.online   { color: #4caf50; }
-.offline  { color: #f44336; }
