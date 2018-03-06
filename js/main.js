@@ -9,7 +9,7 @@ let channels = [
   "habathcx",
   "RobotCaleb",
   "noobs2ninjas",
-  "invalidchannel1982",
+  "invalid channel",
   "invalid-channel",
   "riotgames",
   "syndicate",
@@ -24,6 +24,14 @@ for (let i = 0; i < channels.length; i++) {
 }
 
 //------FUNCTIONALITY------//
+$("#search-box").keyup(function(event) {
+  if (event.keyCode === 13) $("#search-btn").click();
+});
+
+$("#search-btn").on("click", function() {
+  generateHTML($("#search-box").val());
+});
+
 function generateHTML(channel) {
   let url = `https://wind-bow.glitch.me/twitch-api/channels/${channel}`;
 
@@ -41,23 +49,23 @@ function generateHTML(channel) {
 }
 
 function invalidChannelHTML(data) {
-  app.innerHTML += `
+  app.insertAdjacentHTML("afterbegin", `
     <div class="card bg-dark border-secondary rounded-0">
       <p class="text-danger">${data.status}: ${data.error}</p>
       <p class="text-light">${data.message}</p>
     </div>
-  `;
+  `);
 }
 
 function offlineChannelHTML(channel) {
-  app.innerHTML += `
+  app.insertAdjacentHTML("afterbegin", `
     <a class="card bg-dark text-light border-secondary rounded-0" href="https://www.twitch.tv/${channel}" target="_blank">
       <div>
         <p class="text-warning">OFFLINE</p>
         <p>${channel}</p>
       </div>
     </a>
-  `;
+  `);
 }
 
 function onlineChannelHTML(data) {
@@ -66,7 +74,7 @@ function onlineChannelHTML(data) {
   let status = data.stream.channel.status;
   let link = data.stream.channel.url;
 
-  app.innerHTML += `
+  app.insertAdjacentHTML("afterbegin", `
     <a class="card bg-dark text-light border-secondary rounded-0" href="${link}" target="_blank">
       <div>
         <p class="text-success">ONLINE</p>
@@ -74,5 +82,5 @@ function onlineChannelHTML(data) {
         <p>Description: <br>${status}</p>
       </div>
     </a>
-  `;
+  `);
 }
