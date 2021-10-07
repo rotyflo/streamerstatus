@@ -54,11 +54,10 @@ function invalidChannelHTML(data) {
 function offlineChannelHTML(channel) {
   app.insertAdjacentHTML("afterbegin", `
     
-      <div>
-        <a href="https://www.twitch.tv/${channel}" target="_blank">${channel}</a>
-        <p>OFFLINE</p>
-        <hr>
-      </div>
+      <p>
+        <a href="https://www.twitch.tv/${channel}" target="_blank">${channel}</a><br>
+        <span style="color: red;">Offline</span>
+      </p>
   `);
 }
 
@@ -69,12 +68,10 @@ function onlineChannelHTML(data) {
   let link = data.stream.channel.url;
 
   app.insertAdjacentHTML("afterbegin", `
-      <div>
-        <a href="${link}" target="_blank">${streamer}</a>
-        <p>ONLINE</p>
-        <p>is playing ${game}</p>
-        <p>Description: <br>${status}</p>
-        <hr>
-      </div>
+      <p>
+        <a href="${link}" target="_blank">${streamer}</a><br>
+        <u>${game}</u><br>
+        <span>${status}</span>
+      </p>
   `);
 }
