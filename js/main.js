@@ -9,13 +9,7 @@ let channels = [
   "habathcx",
   "RobotCaleb",
   "noobs2ninjas",
-  "invalid channel",
-  "invalid-channel",
-  "riotgames",
-  "syndicate",
-  "summit1g",
-  "esl_csgo",
-  "esltv_cs"
+  "invalid channel"
 ];
 let app = document.getElementById("app");
 
@@ -50,21 +44,21 @@ function generateHTML(channel) {
 
 function invalidChannelHTML(data) {
   app.insertAdjacentHTML("afterbegin", `
-    <div class="card bg-dark border-secondary rounded-0">
-      <p class="text-danger">${data.status}: ${data.error}</p>
-      <p class="text-light">${data.message}</p>
+    <div>
+      <p>${data.status}: ${data.error}</p>
+      <p>${data.message}</p>
     </div>
   `);
 }
 
 function offlineChannelHTML(channel) {
   app.insertAdjacentHTML("afterbegin", `
-    <a class="card bg-dark text-light border-secondary rounded-0" href="https://www.twitch.tv/${channel}" target="_blank">
+    
       <div>
-        <p class="text-warning">OFFLINE</p>
-        <p>${channel}</p>
+        <a href="https://www.twitch.tv/${channel}" target="_blank">${channel}</a>
+        <p>OFFLINE</p>
+        <hr>
       </div>
-    </a>
   `);
 }
 
@@ -75,12 +69,12 @@ function onlineChannelHTML(data) {
   let link = data.stream.channel.url;
 
   app.insertAdjacentHTML("afterbegin", `
-    <a class="card bg-dark text-light border-secondary rounded-0" href="${link}" target="_blank">
       <div>
-        <p class="text-success">ONLINE</p>
-        <p>${streamer} is playing ${game}</p>
+        <a href="${link}" target="_blank">${streamer}</a>
+        <p>ONLINE</p>
+        <p>is playing ${game}</p>
         <p>Description: <br>${status}</p>
+        <hr>
       </div>
-    </a>
   `);
 }

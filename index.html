@@ -7,36 +7,27 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Twitch Streamer Status</title>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-    crossorigin="anonymous">
   <link rel="stylesheet" href="css/main.css">
 </head>
 
-<body class="bg-secondary">
-  <div class="container-fluid">
+<body class="container">
 
-    <div class="row">
-      <h1 id="title" class="col-md-12 bg-dark text-light">Twitch Streamer Status</h1>
-    </div>
+  <header>
+    <h1 id="title">Twitch Streamer Status</h1>
+  </header>
 
-    <div class="row">
-      <div class="col-md-4">
-        <div class="input-group">
-          <input type="text" id="search-box" class="form-control" placeholder="Search for streamers...">
-          <div class="input-group-append">
-            <button class="btn btn-dark" type="button" id="search-btn">Search</button>
-          </div>
-        </div>
+  <p>Select a card to go to that streamer's page</p>
 
-        <p>Select a card to go to that streamer's page</p>
-      </div>
+  <input type="text" id="search-box" placeholder="Search for streamers...">
+  
+  <hstack>
+    <spacer></spacer>
+  <button type="button" id="search-btn" class="btn btn-primary">Search</button>
+    </hstack>
+  <div id="app"></div>
 
-      <div id="app" class="col-md-8"></div>
-    </div>
-  </div>
-
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="js/main.js"></script>
 </body>
 
