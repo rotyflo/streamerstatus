@@ -52,7 +52,7 @@ function invalidChannelHTML(data) {
 }
 
 function offlineChannelHTML(channel) {
-  app.insertAdjacentHTML("afterbegin", `
+  app.insertAdjacentHTML("beforeend", `
     
       <p>
         <a href="https://www.twitch.tv/${channel}" target="_blank">${channel}</a><br>
