@@ -33,12 +33,12 @@ $("#search-btn").on("click", function() {
 });
 
 function generateHTML(channel) {
-  let url = `https://wind-bow.glitch.me/twitch-api/channels/${channel}`;
+  let url = `https://twitch-proxy.freecodecamp.rocks/twitch-api/channels/${channel}`;
 
   $.getJSON(url, function (data) {
     if (data.hasOwnProperty("error")) invalidChannelHTML(data);
     else {
-      url = `https://wind-bow.glitch.me/twitch-api/streams/${channel}`;
+      url = `https://twitch-proxy.freecodecamp.rocks/twitch-api/streams/${channel}`;
 
       $.getJSON(url, function (data) {
         if (data.stream === null) offlineChannelHTML(channel);
