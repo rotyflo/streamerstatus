@@ -7,3 +7,7 @@ img {
   border: solid black 1px;
   border-radius: 15%;
 }
+
+#search, #error {
+  margin-bottom: 30px;
+}

@@ -3,32 +3,48 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Twitch Streamer Status</title>
+  <title>Streamer Status</title>
 
   <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body class="container">
-
   <header>
-    <h1 id="title">Twitch Streamer Status</h1>
+    <h1 id="title">Streamer Status</h1>
   </header>
-<!-- 
-  <p>Select a card to go to that streamer's page</p>
 
-  <input type="text" id="search-box" placeholder="Search for streamers...">
-  
-  <hstack>
-    <spacer></spacer>
-  <button type="button" id="search-btn" class="btn btn-primary">Search</button>
-    </hstack> -->
-  <div id="app"></div>
+  <main>
+    <!-- <section id="search">
+      <hstack>
+        <input type="text" id="search-box" placeholder="Streamer Name">
+        <button type="button" id="search-btn" class="btn btn-primary">Search</button>
+      </hstack>
+    </section> -->
 
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script src="js/main.js"></script>
+    <section>
+      <article>
+        <h3>Online<span class="loading">...</span></h3>
+        <div id="online"></div>
+      </article>
+
+      <article>
+        <h3>Offline<span class="loading">...</span></h3>
+        <div id="offline"></div>
+      </article>
+      
+      <article>
+        <h3>Error<span class="loading">...</span></h3>
+        <div id="error"></div>
+      </article>
+    </section>
+
+    <footer>
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+      <script src="js/main.js"></script>
+    </footer>
+  </main>
 </body>
 
 </html>
